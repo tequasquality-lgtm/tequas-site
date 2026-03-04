@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- GOOGLE SEO & DOĞRULAMA -->
+    <meta name="google-site-verification" content="cKzEC2Q9y0bh8L8JBkIsJODJbP92pdIWMWi2SBoW36M" />
+    <title>TEQUAS | Mühendislik ve Kalite Yönetimi | Ataşehir İstanbul</title>
+    <meta name="description" content="TEQUAS, üretim tesisleri için stratejik kalite yönetimi, laboratuvar kurulumu ve veri analitiği çözümleri sunar. Mühendislik temelli süreç optimizasyonu.">
+    
+    <!-- OPEN GRAPH -->
+    <meta property="og:title" content="TEQUAS | Stratejik Kalite Yönetimi & Mühendislik Çözümleri">
+    <meta property="og:description" content="Üretimde sıfır hata vizyonu, ölçülebilir kalite altyapısı ve veri analitiği.">
+    <meta property="og:image" content="tequas-bg.jpg">
+    <meta property="og:url" content="https://www.tequas.com">
+    <meta property="og:type" content="website">
+
+    <!-- FAVICON (ikonum.png) -->
+    <link rel="icon" type="image/png" href="ikonum.png?v=24.0">
+    <link rel="shortcut icon" type="image/png" href="ikonum.png?v=24.0">
+    <link rel="apple-touch-icon" href="ikonum.png?v=24.0">
+    <meta name="theme-color" content="#0F172A">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tequas: {
+                            gold: '#B68D40',
+                            navy: '#0F172A',
+                            slate: '#1E293B',
+                            accent: '#D4AF37',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        .site-page { display: none; }
+        .site-page.active { display: block; animation: pageFadeIn 0.5s ease-out; }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hero-bg-image {
+            background-image: url('./tequas-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            inset: 0;
+            opacity: 0.45;
+            filter: brightness(1.2) contrast(1.1);
+        }
+
+        .nav-tab { 
+            position: relative;
+            cursor: pointer;
+            padding: 8px 12px;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+        }
+        .nav-tab:hover { color: #B68D40; background: rgba(255, 255, 255, 0.05); }
+        .nav-tab.active { color: #B68D40; border-bottom: 2px solid #B68D40; background: rgba(182, 141, 64, 0.05); }
+        
+        #mobile-menu { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); max-height: 0; overflow: hidden; }
+        #mobile-menu.open { max-height: 600px; padding: 20px 0; }
+        
+        .service-block { border-left: 4px solid #B68D40; padding-left: 2rem; margin-bottom: 5rem; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin: auto; height: 350px; }
+        
+        .brand-text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            display: flex;
+            align-items: center;
+        }
+        .white-part { color: #FFFFFF; }
+        .gold-part { color: #B68D40; }
+
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50px;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #B68D40;
+            color: white;
+            font-weight: 900;
+            border-radius: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        .lang-btn {
+            padding: 4px 8px;
+            font-size: 10px;
+            font-weight: 800;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 2px;
+            color: white;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover { border-color: #B68D40; color: #B68D40; }
+        .lang-btn.active { background: #B68D40; border-color: #B68D40; color: white; }
+    </style>
+</head>
+<body class="bg-tequas-light text-tequas-navy font-sans antialiased overflow-x-hidden">
+
+    <!-- WHATSAPP BUTONU -->
+    <a href="https://wa.me/905336797161" target="_blank" class="whatsapp-float" aria-label="WhatsApp üzerinden iletişime geçin">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ÜST NAVİGASYON -->
+    <nav class="fixed top-0 w-full z-50 bg-tequas-navy border-b border-white/10 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
+            <div class="flex flex-col cursor-pointer group" onclick="app.nav('home')">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-8 bg-tequas-gold rounded-full group-hover:scale-y-110 transition-transform"></div>
+                    <span class="brand-text text-3xl uppercase leading-none">
+                        <span class="white-part">TEQ</span><span class="gold-part">UAS</span>
+                    </span>
+                </div>
+                <span class="text-[7px] tracking-[0.15em] font-bold text-tequas-gold uppercase ml-4 opacity-70" data-key="tagline">STRATEGIC QUALITY & TECHNOLOGY ENGINEERING</span>
+            </div>
+            
+            <div class="hidden lg:flex items-center h-full">
+                <div class="flex h-full items-center">
+                    <button onclick="app.nav('home')" id="btn-home" class="nav-tab active text-white font-bold uppercase" data-key="nav_home">GİRİŞ</button>
+                    <button onclick="app.nav('vision')" id="btn-vision" class="nav-tab text-slate-400 font-bold uppercase" data-key="nav_vision">VİZYON & MİSYON</button>
+                    <button onclick="app.nav('services')" id="btn-services" class="nav-tab text-slate-400 font-bold uppercase" data-key="nav_services">HİZMETLERİMİZ</button>
+                    <button onclick="app.nav('about')" id="btn-about" class="nav-tab text-slate-400 font-bold uppercase" data-key="nav_about">HAKKIMIZDA</button>
+                    <button onclick="app.nav('why')" id="btn-why" class="nav-tab text-slate-400 font-bold uppercase" data-key="nav_why">NEDEN TEQUAS?</button>
+                </div>
+                
+                <div class="flex gap-2 ml-6 border-l border-white/10 pl-6 h-10 items-center">
+                    <button onclick="app.setLanguage('tr')" class="lang-btn tr-btn active">TR</button>
+                    <button onclick="app.setLanguage('en')" class="lang-btn en-btn">EN</button>
+                </div>
+
+                <div class="ml-6">
+                    <button onclick="app.nav('contact')" id="btn-contact" class="bg-tequas-gold hover:bg-white hover:text-tequas-navy px-6 py-2.5 text-white text-[10px] font-black uppercase tracking-[0.2em] transition-all rounded-sm" data-key="nav_contact">İLETİŞİM</button>
+                </div>
+            </div>
+
+            <div class="lg:hidden flex items-center gap-2.5 bg-white/5 border border-white/20 px-3.5 py-2 rounded-sm cursor-pointer transition-all active:scale-95 hover:bg-white/10" onclick="app.toggleMenu()" aria-label="Menüyü Aç">
+                <span class="text-[9px] font-black tracking-[0.2em] text-white/90 uppercase" data-key="mobile_menu_text">MENÜ</span>
+                <i class="fas fa-bars text-white text-lg" id="menu-icon"></i>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="lg:hidden bg-tequas-slate border-t border-white/5">
+            <div class="flex flex-col px-6 gap-4">
+                <button onclick="app.nav('home')" class="text-left text-white font-bold text-xs py-2 border-b border-white/5 uppercase" data-key="nav_home">GİRİŞ</button>
+                <button onclick="app.nav('vision')" class="text-left text-white font-bold text-xs py-2 border-b border-white/5 uppercase" data-key="nav_vision">VİZYON & MİSYON</button>
+                <button onclick="app.nav('services')" class="text-left text-white font-bold text-xs py-2 border-b border-white/5 uppercase" data-key="nav_services">HİZMETLERİMİZ</button>
+                <button onclick="app.nav('about')" class="text-left text-white font-bold text-xs py-2 border-b border-white/5 uppercase" data-key="nav_about">HAKKIMIZDA</button>
+                <button onclick="app.nav('why')" class="text-left text-white font-bold text-xs py-2 border-b border-white/5 uppercase" data-key="nav_why">NEDEN TEQUAS?</button>
+                <button onclick="app.nav('contact')" class="text-left text-tequas-gold font-bold text-xs py-2 uppercase" data-key="nav_contact">İLETİŞİM</button>
+                <div class="flex gap-4 py-4 border-t border-white/5">
+                    <button onclick="app.setLanguage('tr')" class="text-white text-xs font-bold uppercase" data-key="lang_tr">TÜRKÇE</button>
+                    <button onclick="app.setLanguage('en')" class="text-white text-xs font-bold uppercase" data-key="lang_en">ENGLISH</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24">
+        
+        <!-- ANA SAYFA -->
+        <section id="page-home" class="site-page active">
+            <div class="relative min-h-[90vh] flex items-center bg-tequas-navy overflow-hidden">
+                <div class="hero-bg-image"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-tequas-navy/30 to-transparent"></div>
+                
+                <div class="max-w-7xl mx-auto px-6 relative z-10 py-20">
+                    <div class="max-w-4xl">
+                        <div class="flex items-center gap-4 mb-8">
+                            <span class="h-px w-12 bg-tequas-gold"></span>
+                            <span class="text-tequas-gold font-bold tracking-[0.4em] text-[10px] uppercase" data-key="hero_sup">STRATEJİK KALİTE YÖNETİMİ</span>
+                        </div>
+                        <h1 class="text-5xl lg:text-7xl font-heading font-black text-white mb-6 leading-tight tracking-tighter" data-key="hero_title">
+                            <!-- JS -->
+                        </h1>
+                        <h2 class="text-xl lg:text-3xl font-heading text-slate-100 font-light mb-12" data-key="hero_quote">
+                            <!-- JS -->
+                        </h2>
+                        
+                        <div class="space-y-6 text-slate-100 text-sm leading-relaxed mb-12 max-w-3xl text-justify" data-key="hero_content">
+                            <!-- JS -->
+                        </div>
+
+                        <div class="flex flex-wrap gap-6 items-center">
+                            <button onclick="app.nav('services')" class="bg-tequas-gold text-white px-10 py-4 font-bold text-xs uppercase tracking-widest hover:bg-white hover:text-tequas-navy transition-all" data-key="hero_btn1">Hizmetlerimizi İnceleyin</button>
+                            <button onclick="app.nav('why')" class="border border-white/20 text-white px-10 py-4 font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all" data-key="hero_btn2">Neden TEQUAS?</button>
+                            
+                            <div class="flex gap-3 ml-4">
+                                <span class="text-[10px] text-white/30 font-bold uppercase tracking-widest" data-key="lang_select">Dil / Lang:</span>
+                                <button onclick="app.setLanguage('tr')" class="text-[10px] font-bold text-white hover:text-tequas-gold" data-key="lang_tr">TÜRKÇE</button>
+                                <span class="text-white/20">|</span>
+                                <button onclick="app.setLanguage('en')" class="text-[10px] font-bold text-white hover:text-tequas-gold" data-key="lang_en">ENGLISH</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VİZYON & MİSYON -->
+        <section id="page-vision" class="site-page">
+            <div class="py-32 px-6 max-w-7xl mx-auto">
+                <div class="mb-16 text-center">
+                    <h2 class="text-4xl font-heading font-black text-tequas-navy uppercase tracking-tighter" data-key="vision_title">Stratejik Hedeflerimiz</h2>
+                    <div class="w-20 h-1 bg-tequas-gold mx-auto mt-4"></div>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="bg-white p-12 shadow-xl border-t-4 border-tequas-gold flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xs font-black text-tequas-gold uppercase tracking-[0.5em] mb-8" data-key="vision_sup">VİZYONUMUZ</h3>
+                            <p class="text-xl font-heading font-medium text-tequas-navy leading-relaxed italic text-justify" data-key="vision_content">
+                                <!-- JS -->
+                            </p>
+                        </div>
+                        <i class="fas fa-bullseye text-4xl text-slate-100 self-end mt-8"></i>
+                    </div>
+                    <div class="bg-tequas-navy p-12 shadow-xl border-t-4 border-tequas-accent flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xs font-black text-tequas-accent uppercase tracking-[0.5em] mb-8 text-white" data-key="mission_sup">MİSYONUMUZ</h3>
+                            <p class="text-xl font-heading font-medium text-white leading-relaxed italic text-justify" data-key="mission_content">
+                                <!-- JS -->
+                            </p>
+                        </div>
+                        <i class="fas fa-rocket text-4xl text-white/5 self-end mt-8"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HİZMETLERİMİZ -->
+        <section id="page-services" class="site-page">
+            <div class="py-32 px-6 max-w-5xl mx-auto">
+                <div class="mb-24 text-center">
+                    <h2 class="text-4xl font-heading font-black text-tequas-navy uppercase tracking-tighter" data-key="services_title">Hizmetlerimiz</h2>
+                    <p class="text-slate-500 mt-4 text-sm tracking-widest uppercase" data-key="services_sup">Mühendislik Temelli Çözüm</p>
+                </div>
+
+                <div class="service-block">
+                    <h3 class="text-2xl font-heading font-black text-tequas-navy mb-8" data-key="s1_title">Kalite Laboratuvarı Kurulumu ve Ölçüm Altyapısı</h3>
+                    <div class="space-y-6 text-slate-600 leading-relaxed text-sm text-justify" data-key="s1_content">
+                        <!-- JS -->
+                    </div>
+                </div>
+
+                <div class="service-block">
+                    <h3 class="text-2xl font-heading font-black text-tequas-navy mb-8" data-key="s2_title">Veri Analitiği</h3>
+                    <div class="space-y-6 text-slate-600 leading-relaxed text-sm text-justify" data-key="s2_content">
+                        <!-- JS -->
+                    </div>
+                </div>
+
+                <div class="service-block">
+                    <h3 class="text-2xl font-heading font-black text-tequas-navy mb-8" data-key="s3_title">Süreç Optimizasyonu</h3>
+                    <div class="space-y-6 text-slate-600 leading-relaxed text-sm text-justify" data-key="s3_content">
+                        <!-- JS -->
+                    </div>
+                </div>
+
+                <!-- NASIL ÇALIŞIRIZ -->
+                <div class="mt-32 pt-20 border-t border-slate-200">
+                    <div class="mb-16 text-center">
+                        <h2 class="text-3xl font-heading font-black text-tequas-navy uppercase tracking-tighter" data-key="how_title">Nasıl Çalışırız?</h2>
+                        <div class="w-16 h-1 bg-tequas-gold mx-auto mt-4"></div>
+                        <p class="text-slate-500 mt-6 text-xs italic tracking-widest uppercase text-center max-w-2xl mx-auto" data-key="how_sup">
+                            <!-- JS -->
+                        </p>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mt-16">
+                        <div class="flex flex-col">
+                            <div class="step-number">01</div>
+                            <h4 class="font-black text-tequas-navy mb-4 text-sm uppercase tracking-wider" data-key="step1_title">Mevcut Durum Analizi</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed" data-key="step1_content">Üretim hattı ve kalite süreçlerindeki darboğazların tespiti için yerinde teknik inceleme.</p>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="step-number">02</div>
+                            <h4 class="font-black text-tequas-navy mb-4 text-sm uppercase tracking-wider" data-key="step2_title">KPI Belirleme</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed" data-key="step2_content">Fire oranları ve verimlilik hedeflerinin sayısal ve ölçülebilir olarak tanımlanması.</p>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="step-number">03</div>
+                            <h4 class="font-black text-tequas-navy mb-4 text-sm uppercase tracking-wider" data-key="step3_title">Sistem Tasarımı</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed" data-key="step3_content">İhtiyaca özel laboratuvar kurulumu ve veri altyapısının mühendislik disipliniyle projelendirilmesi.</p>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="step-number">04</div>
+                            <h4 class="font-black text-tequas-navy mb-4 text-sm uppercase tracking-wider" data-key="step4_title">Kurulum ve Takip</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed" data-key="step4_content">Sistemin devreye alınması ve belirlenen hedeflerin analist desteğiyle düzenli izlenmesi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HAKKIMIZDA -->
+        <section id="page-about" class="site-page">
+            <div class="py-32 px-6 max-w-6xl mx-auto">
+                <div class="bg-white p-8 lg:p-20 shadow-2xl relative border-t-8 border-tequas-gold">
+                    <h2 class="text-4xl font-heading font-black text-tequas-navy mb-12 text-center" data-key="about_title">Hakkımızda</h2>
+                    <div id="about-content-area" data-key="about_content">
+                        <!-- JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEDEN TEQUAS? -->
+        <section id="page-why" class="site-page">
+            <div class="py-32 px-6 max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-3 gap-12 items-start mb-16">
+                    <div class="lg:col-span-1">
+                        <h2 class="text-5xl font-heading font-black text-tequas-navy leading-tight mb-8" data-key="why_title">Neden <br><span class="text-tequas-gold uppercase">TEQUAS?</span></h2>
+                        <p class="text-slate-500 italic mb-8" data-key="why_quote">“Çünkü ölçemediğiniz hiçbir şeyi yönetemezsiniz.”</p>
+                        <div class="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
+                            <h4 class="font-bold text-tequas-navy text-sm mb-4 uppercase tracking-widest text-center" data-key="chart_title">Performans Analizi</h4>
+                            <div class="chart-container">
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-2 grid md:grid-cols-2 gap-8 text-justify">
+                        <div class="p-10 bg-white shadow-lg border-l-4 border-tequas-gold">
+                            <h4 class="text-tequas-navy font-bold mb-4 text-lg" data-key="reason1_title">Veri Odaklı Yönetim</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed" data-key="reason1_content">TEQUAS, kaliteyi sezgilere değil; ölçüm, veri ve mühendislik disiplinine bağlayan bir sistem kurar. Kararlar kişilerden bağımsız, sayısal verilere dayanır.</p>
+                        </div>
+                        <div class="p-10 bg-white shadow-lg border-l-4 border-slate-300">
+                            <h4 class="text-tequas-navy font-bold mb-4 text-lg" data-key="reason2_title">İhtiyaç Temelli Yaklaşım</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed" data-key="reason2_content">Çözüm cihazdan değil, ihtiyaçtan başlamalıdır. Satış odaklı yaklaşımlar yerine, üretimin gerçek ihtiyacını sahada analiz eder, amaca hizmet eden altyapı tasarlarız.</p>
+                        </div>
+                        <div class="p-10 bg-white shadow-lg border-l-4 border-tequas-gold">
+                            <h4 class="text-tequas-navy font-bold mb-4 text-lg" data-key="reason3_title">Yatırım Geri Dönüşü</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed" data-key="reason3_content">Kalite bir maliyet değil, ölçülebilir bir yatırımdır. Kurulan sistemler fireyi ve kaynak kayıplarını görünür kılar, geri dönüşu izlenebilir kılar.</p>
+                        </div>
+                        <div class="p-10 bg-white shadow-lg border-l-4 border-slate-300">
+                            <h4 class="text-tequas-navy font-bold mb-4 text-lg" data-key="reason4_title">Bütüncül Sorumluluk</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed" data-key="reason4_content">Tek muhataplı yapı sunarız. Analizden kurulum ve takibe kadar tüm süreç TEQUAS tarafından yönetilir, koordinasyon yükünü biz üstleniriz.</p>
+                        </div>
+                        <div class="p-10 bg-white shadow-lg border-l-4 border-tequas-gold md:col-span-2">
+                            <h4 class="text-tequas-navy font-bold mb-4 text-lg" data-key="reason5_title">Performans Takibi ve KPI Raporlama</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed" data-key="reason5_content">Kurulan sistem yalnızca altyapı kurmakla kalmaz; ölçülebilir performans göstergeleri (KPI) ile izlenir. Proje başlangıcında mevcut durum analiz edilir, belirlenen göstergeler üzerinden düzenli raporlama yapılır. Fire, tekrar üretim, ölçüm tutarlılığı ve kalite sapmaları sayısal olarak takip edilir.</p>
+                        </div>
+
+                        <!-- SLOGAN YAPILI GELECEĞE HAZIRLIK -->
+                        <div class="p-10 bg-tequas-navy shadow-lg border-l-4 border-tequas-gold md:col-span-2 text-left">
+                            <h4 class="text-tequas-gold font-bold mb-4 text-lg" data-key="reason6_title">Geleceğe Hazırlık</h4>
+                            <p class="text-sm text-slate-200 leading-relaxed text-justify" data-key="reason6_content">
+                                <!-- JS ile doldurulacak -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SIKÇA SORULAN SORULAR -->
+                <div class="py-20 max-w-4xl mx-auto px-6 border-t border-slate-200">
+                    <h3 class="text-2xl font-heading font-black text-tequas-navy mb-10 text-center uppercase tracking-widest" data-key="faq_title">Sıkça Sorulan Sorular</h3>
+                    <div class="space-y-4 text-justify text-sm">
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-tequas-gold">
+                            <h4 class="font-bold text-tequas-navy mb-2" data-key="faq1_q">Kurulan laboratuvar sistemi ne kadar sürede kendini amorti eder?</h4>
+                            <p class="text-slate-600" data-key="faq1_a">Fire oranlarındaki düşüş ve tekrar üretim maliyetlerinin ortadan kalkmasıyla, projelerimiz genellikle 6-12 ay içerisinde yatırım maliyetini karşılamaktadır.</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-tequas-gold">
+                            <h4 class="font-bold text-tequas-navy mb-2" data-key="faq2_q">Paylaşımlı Analist modeli nasıl çalışır?</h4>
+                            <p class="text-slate-600" data-key="faq2_a">Uzman mühendislerimiz, tesisinize haftalık veya aylık periyotlarla saha ziyareti yapar; geri kalan süreçte verilerinizi uzaktan izleyerek raporlar sunar.</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-tequas-gold">
+                            <h4 class="font-bold text-tequas-navy mb-2" data-key="faq4_q">Paylaşımlı analist modelinde veri gizliliği nasıl sağlanır?</h4>
+                            <p class="text-slate-600" data-key="faq4_a">Analistlere hammadde ve gerekli tüm teknik bilgiler özel bir kod sistemiyle verilir; bu sayede firmanın ticari sırları ve hassas verileri tam koruma altına alınır.</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-tequas-gold">
+                            <h4 class="font-bold text-tequas-navy mb-2" data-key="faq3_q">Hangi üretim sektörleri için özelleşmiş mühendislik desteği sağlıyorsunuz?</h4>
+                            <p class="text-slate-600" data-key="faq3_a">Özellikle plastik enjeksiyon, metal işleme ve otomotiv yan sanayi gibi hassas toleransların ve kalite standartlarının kritik olduğu sektörlerde uzmanlaşmış çözümler sunuyoruz.</p>
+                        </div>
+                        <div class="bg-white p-6 shadow-sm border-l-4 border-tequas-gold">
+                            <h4 class="font-bold text-tequas-navy mb-2" data-key="faq5_q">Veri analitiği çalışmaları için üretim hattında büyük bir duruş veya değişiklik gerekiyor mu?</h4>
+                            <p class="text-slate-600" data-key="faq5_a">Hayır. Veri toplama ve analiz süreçlerimiz, üretimi aksatmayacak şekilde tasarlanır. Mevcut çıktılarınızın ve proses parametrelerinizin dijitalleşmesi, üretim akışını durdurmadan gerçekleştirilir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- İLETİŞİM -->
+        <section id="page-contact" class="site-page">
+            <div class="py-32 px-6 max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-20 items-center">
+                    <div class="space-y-12 text-center md:text-left">
+                        <div class="flex items-center gap-4 mb-4 justify-center md:justify-start">
+                            <div class="w-12 h-1 bg-tequas-gold"></div>
+                            <h2 class="text-5xl font-heading font-black text-tequas-navy uppercase tracking-tighter" data-key="contact_title">İletişim</h2>
+                        </div>
+                        
+                        <div class="space-y-8">
+                            <div class="flex flex-col items-center md:items-start gap-4">
+                                <a href="mailto:tequas.quality@gmail.com" class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-tequas-gold hover:bg-tequas-gold hover:text-white transition-all text-2xl shadow-sm">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                                <div>
+                                    <h4 class="text-[10px] font-black text-tequas-gold uppercase tracking-[0.4em] mb-1" data-key="contact_email_label">E-POSTA</h4>
+                                    <a href="mailto:tequas.quality@gmail.com" class="text-xl font-black text-tequas-navy hover:text-tequas-gold transition-all">tequas.quality@gmail.com</a>
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center md:items-start gap-4">
+                                <a href="tel:+905336797161" class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-tequas-gold hover:bg-tequas-gold hover:text-white transition-all text-2xl shadow-sm">
+                                    <i class="fas fa-phone-alt"></i>
+                                </a>
+                                <div>
+                                    <h4 class="text-[10px] font-black text-tequas-gold uppercase tracking-[0.4em] mb-1" data-key="contact_phone_label">TELEFON</h4>
+                                    <a href="tel:+905336797161" class="text-xl font-black text-tequas-navy hover:text-tequas-gold transition-all">+90 533 679 71 61</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-12 shadow-2xl rounded-sm border-t-8 border-tequas-gold">
+                        <form id="vercelContactForm" class="space-y-6">
+                            <input type="text" id="form-name" name="name" placeholder="AD SOYAD / FULL NAME" required class="w-full bg-slate-50 border-b-2 p-4 text-xs font-bold outline-none focus:border-tequas-gold">
+                            <input type="email" id="form-email" name="email" placeholder="E-POSTA / EMAIL" required class="w-full bg-slate-50 border-b-2 p-4 text-xs font-bold outline-none focus:border-tequas-gold">
+                            <textarea id="form-message" name="message" placeholder="PROJE VE İHTİYAÇLARINIZ / PROJECT DETAILS" rows="4" required class="w-full bg-slate-50 border-b-2 p-4 text-xs font-bold outline-none focus:border-tequas-gold"></textarea>
+                            <button type="submit" id="submit-btn" class="w-full bg-tequas-navy text-white py-5 text-xs font-black uppercase tracking-widest hover:bg-tequas-gold transition-all" data-key="form_btn">TALEBİ GÖNDER</button>
+                            <div id="form-status" class="hidden text-center p-4 text-xs font-bold uppercase tracking-widest"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-tequas-navy pt-24 pb-12 text-center border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col items-center mb-8">
+                <span class="brand-text text-3xl uppercase leading-none">
+                    <span class="white-part">TEQ</span><span class="gold-part">UAS</span>
+                </span>
+                <span class="text-[7px] tracking-[0.3em] font-bold text-slate-500 uppercase mt-2" data-key="tagline">STRATEGIC QUALITY & TECHNOLOGY ENGINEERING</span>
+            </div>
+            
+            <div class="mb-10">
+                <p class="text-[11px] text-slate-400 font-black tracking-[0.4em] uppercase mb-8" data-key="footer_address">ATAŞEHİR / İSTANBUL</p>
+                <div class="flex justify-center items-center gap-12">
+                    <a href="mailto:tequas.quality@gmail.com" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-tequas-gold hover:border-tequas-gold transition-all text-xl" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="tel:+905336797161" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-tequas-gold hover:border-tequas-gold transition-all text-xl" title="Phone">
+                        <i class="fas fa-phone-alt"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/111710024/" target="_blank" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-tequas-gold hover:border-tequas-gold transition-all text-xl" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://www.instagram.com/tequas.co/" target="_blank" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-slate-400 hover:text-tequas-gold hover:border-tequas-gold transition-all text-xl" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-white/5">
+                <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.5em]" data-key="copyright">
+                    &copy; 2026 TEQUAS MÜHENDİSLİK. TÜM HAKLARI SAKLIDIR.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FORMSPREE ID'NİZ ENTEGRE EDİLDİ
+        const formspreeID = "xbdagobe"; 
+
+        const translations = {
+            tr: {
+                tagline: "STRATEJİK KALİTE & TEKNOLOJİ MÜHENDİSLİĞİ",
+                nav_home: "GİRİŞ",
+                nav_vision: "VİZYON & MİSYON",
+                nav_services: "HİZMETLERİMİZ",
+                nav_about: "HAKKIMIZDA",
+                nav_why: "NEDEN TEQUAS?",
+                nav_contact: "İLETİŞİM",
+                lang_select: "Dil:",
+                lang_tr: "TÜRKÇE",
+                lang_en: "İNGİLİZCE",
+                mobile_menu_text: "MENÜ",
+                hero_sup: "STRATEJİK KALİTE YÖNETİMİ",
+                hero_title: 'Üretim tesislerinde ölçüm, kalite ve <span class="text-tequas-gold italic">süreç altyapısı kuruyoruz.</span>',
+                hero_quote: '“Fire, tekrar üretim ve kalite sapmalarını <span class="text-white font-bold">ölçülebilir hale getirir, sürdürülebilir sistem kurarız.</span>”',
+                hero_content: `<p>Plastik ve metal üretim tesisleri başta olmak üzere; <b>TEQUAS</b>, tesisinizi kaliteli ürün vizyonuna taşıyan; kaliteyi bir maliyet kalemi olmaktan çıkarıp <b>kâr odaklı, ölçülebilir bir sisteme</b> dönüştüren çözümler sunar. Yaklaşımımız, <b>ölçülmeyen kalitenin yönetilemeyeceği</b> prensibine dayanır.</p>
+                               <p>Kurulan laboratuvar ve ölçüm altyapısı; <b>fire ve tekrar üretimlerden</b> kaynaklanan görünmez maliyetleri azaltarak, <b>kendi kendini amorti eden</b> ve ölçülebilir geri dönüşe (<b>ROI</b>) sahip bir yapı oluşturur. Bu sistem yalnızca bugünün üretim sorunlarını çözmekle kalmaz; firmanızı gelecekteki <b>sınırda karbon düzenlemeleri</b> ve <b>sürdürülebilirlik gereklilikleri</b> için de hazır hale getirir.</p>
+                               <p>Üretimden elde edilen veriler sayesinde kalite, kaynak kullanımı ve çevresel etkiler <b>somut göstergelerle</b> izlenebilir ve raporlanabilir hale gelir. TEQUAS ile kurulan altyapı; üretiminizi <b>daha kontrollü, daha kârlı ve daha sürdürülebilir</b> bir yapıya dönüştürür.</p>`,
+                hero_btn1: "Hizmetlerimizi İnceleyin",
+                hero_btn2: "Neden TEQUAS?",
+                vision_title: "Stratejik Hedeflerimiz",
+                vision_sup: "VİZYONUMUZ",
+                vision_content: "“Türkiye’deki üretim tesislerini, sıfır hata hedefi doğrultusunda; ölçülebilir kalite kriterleri, standartlaştırılmış süreçler ve veri temelli karar mekanizmalarıyla Avrupa üretim ve denetim standartlarıyla uyumlu bir yapıya taşımak.”",
+                mission_sup: "MİSYONUMUZ",
+                mission_content: "“Üreticinin üzerinde görünmez bir yük haline gelen kalitesiz ürün maliyetini; mühendislik temelli süreç analizi, doğru ölçüm altyapısı ve ihtiyaca uygun teknoloji seçimiyle hesaplanabilir, kullanışlı ve sürdürülebilir biçimde ortadan kaldırmak.”",
+                services_title: "Hizmetlerimiz",
+                services_sup: "Mühendislik Temelli Çözüm",
+                s1_title: "Kalite Laboratuvarı Kurulumu ve Ölçüm Altyapısı",
+                s1_content: `<p>TEQUAS, üretim tesisinizin mevcut yapısını ve hedef pazar gerekliliklerini dikkate alarak, ihtiyaca özel kalite kontrol ve ölçüm altyapısı kurar. Süreç, sahada yapılan teknik değerlendirme ile başlar ve anahtar teslim laboratuvar kurulumu ile tamamlanır.</p>
+                             <p>İlk aşamada, üretim süreçleriniz yerinde incelenir; ürün tipi, toleranslar, müşteri beklentileri ve ilgili standartlar doğrultusunda kalite kontrol ihtiyaçları netleştirilir. Bu analiz sonucunda, laboratuvarınızda bulunması gereken ölçüm cihazları, test ekipmanları ve yardımcı malzemeler teknik gerekçeleriyle belirlenir.</p>
+                             <p>Seçilen cihazların tedarik süreci TEQUAS tarafından takip edilir. Laboratuvar kurulumu için gerekli fiziksel koşulların sağlanması konusunda teknik destek verilir. Tüm kurulum ve yerleşim tamamlandığında, laboratuvar çalışır, ölçüm yapabilir ve denetime hazır şekilde devreye alınır.</p>`,
+                s2_title: "Veri Analitiği",
+                s2_content: `<p>TEQUAS, üretim çıktılarınızı sezgisel yorumlardan bağımsız hale getirerek, matematiksel ve karşılaştırılabilir bir izleme yapısına kavuşturur. Amaç; üretimin sonucunu yalnızca görmek değil, nedenleriyle birlikte anlamaktır.</p>
+                             <p>Üretim, kalite ve ölçüm verileri; laboratuvar sonuçları, proses parametreleri ve saha gözlemleriyle birlikte değerlendirilir. Bu veriler, trendler, sapmalar ve tekrar eden örüntüler üzerinden analiz edilerek, karar alma süreçlerine doğrudan girdi sağlayacak şekilde yapılandırılır.</p>`,
+                s3_title: "Süreç Optimizasyonu",
+                s3_content: `<p>TEQUAS, üretim süreçlerinde fire ve tekrar üretimi azaltmaya yönelik olarak, Avrupa standartlarıyla uyumlu denetim ve iyileştirme mekanizmaları kurar. Bu yaklaşım, yalnızca sorunları tespit etmeye değil; süreçlerin sürdürülebilir biçimde iyileştirilmesine odaklanır.</p>
+                             <p>Hizmet modeli, bölgesel olarak yapılandırılmış paylaşımlı analist desteği ile yürütülür. Uygun bölgelerde, üretim tesislerinde yerinde yapılan süreç gözlemleri ve ölçümlerle mevcut durum analiz edilir. Fiziksel varlığın gerekmediği aşamalarda ise, uzaktan veri değerlendirme, raporlama ve performans takibi ile süreçler süreklilik içinde izlenir.</p>`,
+                how_title: "Nasıl Çalışırız?",
+                how_sup: "Kalite Tesadüf Değildir. <br> Doğru Ölçüm, Doğru Sistem ve Disiplinli Süreç Yönetiminin Sonucudur.",
+                step1_title: "Mevcut Durum Analizi",
+                step1_content: "Üretim hattı ve kalite süreçlerindeki darboğazların tespiti için yerinde teknik inceleme.",
+                step2_title: "KPI Belirleme",
+                step2_content: "Fire oranları ve verimlilik hedeflerinin sayısal ve ölçülebilir olarak tanımlanması.",
+                step3_title: "Sistem Tasarımı",
+                step3_content: "İhtiyaca özel laboratuvar kurulumu ve veri altyapısının mühendislik disipliniyle projelendirilmesi.",
+                step4_title: "Kurulum ve Takip",
+                step4_content: "Sistemin devreye alınması ve belirlenen hedeflerin analist desteğiyle düzenli izlenmesi.",
+                about_title: "Hakkımızda",
+                about_content: `
+                    <div class="space-y-8 text-slate-700 leading-relaxed text-lg text-justify">
+                        <p>TEQUAS, üretim tesislerinde kaliteyi bireysel deneyimlere veya alışkanlıklara bırakmayan; ölçüm, veri ve mühendislik disiplini üzerine inşa edilmiş bir sistem yaklaşımıyla faaliyet gösterir.</p>
+                        <p>Modern üretimde kalite; yalnızca son kontrolde tespit edilen bir sonuç değil, süreç boyunca tasarlanması ve doğrulanması gereken bir yapıdır. Bu nedenle TEQUAS, kaliteyi bir kontrol faaliyeti olarak değil; ölçüm altyapısı, süreç yönetimi ve teknik doğrulama mekanizmalarının bütünsel bir sistemi olarak ele alır.</p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 my-12">
+                            <div class="p-8 bg-slate-50 border-t-4 border-tequas-gold text-center">
+                                <i class="fas fa-microscope text-tequas-gold text-3xl mb-4"></i>
+                                <h4 class="font-black text-tequas-navy uppercase tracking-widest text-xs mb-2">Ölçülebilirlik</h4>
+                            </div>
+                            <div class="p-8 bg-slate-50 border-t-4 border-tequas-gold text-center">
+                                <i class="fas fa-project-diagram text-tequas-gold text-3xl mb-4"></i>
+                                <h4 class="font-black text-tequas-navy uppercase tracking-widest text-xs mb-2">İzlenebilirlik</h4>
+                            </div>
+                            <div class="p-8 bg-slate-50 border-t-4 border-tequas-gold text-center">
+                                <i class="fas fa-leaf text-tequas-gold text-3xl mb-4"></i>
+                                <h4 class="font-black text-tequas-navy uppercase tracking-widest text-xs mb-2">Sürdürülebilirlik</h4>
+                            </div>
+                        </div>
+
+                        <p>Bir üretim tesisinde gerçek kalite ancak doğru ölçüm sistemleri kurulduğunda, proses parametreleri kontrol altına alındığında ve kararlar veri üzerinden verildiğinde mümkün olur. TEQUAS, projelerinde ölçüm güvenilirliğini, proses stabilitesini ve sistematik kalite altyapısını birlikte kurgular.</p>
+                        <p>Her çalışma; ilgili sektörün teknik dinamikleri, üretim karakteristiği ve denetim gereklilikleri dikkate alınarak yapılandırılır. Süreçler parça parça değil, tek bir sistem mantığıyla ele alınır. Amaç yalnızca mevcut bir problemi çözmek değil; firmanın kendi içinde çalışabilen, denetlenebilir ve geleceğe uyumlu bir kalite yapısı oluşturmasını sağlamaktır.</p>
+
+                        <div class="bg-tequas-navy p-10 my-12 text-white shadow-xl">
+                            <h4 class="text-tequas-gold font-black uppercase tracking-[0.3em] text-[10px] mb-6">Kurulan sistemler;</h4>
+                            <ul class="grid md:grid-cols-2 gap-4 text-sm font-medium">
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> İç denetimlere hazır</li>
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Müşteri gereklilikleri ile uyumlu</li>
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Ulusal ve uluslararası standartlara entegre</li>
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Operasyonel olarak sürdürülebilir</li>
+                            </ul>
+                            <p class="mt-6 text-xs text-slate-400 italic">şekilde tasarlanır.</p>
+                        </div>
+
+                        <p>TEQUAS’ın yaklaşımı, kaliteyi kişilere bağlı bir refleks olmaktan çıkarıp kurumsal bir sistem çıktısı haline getirmeye dayanır. Çünkü sürdürülebilir kalite; iyi niyetle değil, doğru yapılandırılmış bir mühendislik altyapısıyla sağlanır.</p>
+                        <p class="font-black text-tequas-navy text-xl pt-6 border-t border-slate-100">TEQUAS, üretimde teknik netlik, ölçülebilir performans ve sistematik güven inşa eder.</p>
+                    </div>
+                `,
+                why_title: "Neden TEQUAS?",
+                why_quote: "“Çünkü ölçemediğiniz hiçbir şeyi yönetemezsiniz.”",
+                chart_title: "Performans Analizi",
+                reason1_title: "Veri Odaklı Yönetim",
+                reason1_content: "TEQUAS, kaliteyi sezgilere değil; ölçüm, veri ve mühendislik disiplinine bağlayan bir sistem kurar. Kararlar kişilerden bağımsız, sayısal verilere dayanır.",
+                reason2_title: "İhtiyaç Temelli Yaklaşım",
+                reason2_content: "Çözüm cihazdan değil, ihtiyaçtan başlamalıdır. Satış odaklı yaklaşımlar yerine, üretimin gerçek ihtiyacını sahada analiz eder, amaca hizmet eden altyapı tasarlarız.",
+                reason3_title: "Yatırım Geri Dönüşü",
+                reason3_content: "Kalite bir maliyet değil, ölçülebilir bir yatırımdır. Kurulan sistemler fireyi ve kaynak kayıplarını görünür kılar, geri dönüşu izlenebilir kılar.",
+                reason4_title: "Bütüncül Sorumluluk",
+                reason4_content: "Tek muhataplı yapı sunarız. Analizden kurulum ve takibe kadar tüm süreç TEQUAS tarafından yönetilir, koordinasyon yükünü biz üstleniriz.",
+                reason5_title: "Performans Takibi ve KPI Raporlama",
+                reason5_content: "Kurulan sistem yalnızca altyapı kurmakla kalmaz; ölçülebilir performans göstergeleri (KPI) ile izlenir. Proje başlangıcında mevcut durum analiz edilir, belirlenen göstergeler üzerinden düzenli raporlama yapılır. Fire, tekrar üretim, ölçüm tutarlılığı ve kalite sapmaları sayısal olarak takip edilir.",
+                reason6_title: "Geleceğe Hazırlık",
+                reason6_content: "TEQUAS ile kurulan altyapı; denetim, sürdürülebilirlik ve sınırda karbon gibi geleceğin gerekliliklerine uyum sağlayabilecek şekilde yapılandırılır.",
+                faq_title: "Sıkça Sorulan Sorular",
+                faq1_q: "Kurulan laboratuvar sistemi ne kadar sürede kendini amorti eder?",
+                faq1_a: "Fire oranlarındaki düşüş ve tekrar üretim maliyetlerinin ortadan kalkmasıyla, projelerimiz genellikle 6-12 ay içerisinde yatırım maliyetini karşılamaktadır.",
+                faq2_q: "Paylaşımlı Analist modeli nasıl çalışır?",
+                faq2_a: "Uzman mühendislerimiz, tesisinize haftalık veya aylık periyotlarla saha ziyareti yapar; geri kalan süreçte verilerinizi uzaktan izleyerek raporlar sunar.",
+                faq3_q: "Hangi üretim sektörleri için özelleşmiş mühendislik desteği sağlıyorsunuz?",
+                faq3_a: "Özellikle plastik enjeksiyon, metal işleme ve otomotiv yan sanayi gibi hassas toleransların ve kalite standartlarının kritik olduğu sektörlerde uzmanlaşmış çözümler sunuyoruz.",
+                faq4_q: "Paylaşımlı analist modelinde veri gizliliği nasıl sağlanır?",
+                faq4_a: "Analistlere hammadde ve gerekli tüm teknik bilgiler özel bir kod sistemiyle verilir; bu sayede firmanın ticari sırları ve hassas verileri tam koruma altına alınır.",
+                faq5_q: "Veri analitiği çalışmaları için üretim hattında büyük bir duruş veya değişiklik gerekiyor mu?",
+                faq5_a: "Hayır. Veri toplama ve analiz süreçlerimiz, üretimi aksatmayacak şekilde tasarlanır. Mevcut çıktılarınızın ve proses parametrelerinizin dijitalleşmesi, üretim akışını durdurmadan gerçekleştirilir.",
+                contact_title: "İletişim",
+                contact_email_label: "E-POSTA",
+                contact_phone_label: "TELEFON",
+                footer_address: "ATAŞEHİR / İSTANBUL",
+                form_btn: "TALEBİ GÖNDER",
+                copyright: "&copy; 2026 TEQUAS MÜHENDİSLİK. TÜM HAKLARI SAKLIDIR.",
+                form_success: "TALEBİNİZ BAŞARIYLA ALINDI. EN KISA SÜREDE DÖNÜŞ YAPACAĞIZ.",
+                form_error: "BİR HATA OLUŞTU. LÜTFEN BİRAZ SONRA TEKRAR DENEYİN.",
+                form_config_error: "FORM YAPILANDIRMASI HENÜZ TAMAMLANMAMIŞ.",
+                lang_tr: "TÜRKÇE",
+                lang_en: "İNGİLİZCE"
+            },
+            en: {
+                tagline: "STRATEGIC QUALITY & TECHNOLOGY ENGINEERING",
+                nav_home: "HOME",
+                nav_vision: "VISION & MISSION",
+                nav_services: "SERVICES",
+                nav_about: "ABOUT US",
+                nav_why: "WHY TEQUAS?",
+                nav_contact: "CONTACT",
+                lang_select: "Lang:",
+                lang_tr: "TURKISH",
+                lang_en: "ENGLISH",
+                mobile_menu_text: "MENU",
+                hero_sup: "STRATEGIC QUALITY MANAGEMENT",
+                hero_title: 'Building measurement, quality and <span class="text-tequas-gold italic">process infrastructure in production plants.</span>',
+                hero_quote: '“We turn waste, re-production and quality deviations into <span class="text-white font-bold">measurable and sustainable systems.</span>”',
+                hero_content: `<p>Especially for plastic and metal production facilities; <b>TEQUAS</b> carries your plant to a quality product vision; transforming quality from a cost item into a <b>profit-oriented, measurable system.</b> Our approach is based on the principle that <b>unmeasured quality cannot be managed.</b></p>
+                               <p>Established laboratory and measurement infrastructure reduces invisible costs from <b>waste and re-production,</b> creating a self-amortizing structure with a measurable <b>ROI</b>. This system only solves today's production problems but also prepares your company for <b>carbon regulations</b> and <b>sustainability requirements.</b></p>
+                               <p>With data from production, quality, resource use, and environmental impacts become monitorable and reportable with <b>concrete indicators.</b> TEQUAS transforms your production into a <b>more controlled, profitable, and sustainable</b> structure.</p>`,
+                hero_btn1: "Explore Our Services",
+                hero_btn2: "Why TEQUAS?",
+                vision_title: "Strategic Goals",
+                vision_sup: "OUR VISION",
+                vision_content: "“To carry production plants in Turkey towards zero-defect goals through measurable quality criteria, standardized processes, and data-based decision mechanisms aligned with European production and audit standards.”",
+                mission_sup: "OUR MISSION",
+                mission_content: "“To eliminate the invisible burden of low-quality production costs through engineering-based process analysis, accurate measurement infrastructure, and appropriate technology selection in a calculable and sustainable manner.”",
+                services_title: "Our Services",
+                services_sup: "Engineering Based Solutions",
+                s1_title: "Quality Lab Setup & Measurement Infrastructure",
+                s1_content: `<p>TEQUAS designs and installs custom quality control and measurement infrastructure based on your plant's specific needs and target market requirements. The process starts with an on-site technical evaluation and ends with a turnkey laboratory installation.</p>
+                             <p>In the first phase, your production processes are inspected on-site; quality control needs are clarified based on product type, tolerances, customer expectations, and relevant standards. This analysis determines the measurement devices, test equipment, and auxiliary materials required for your lab.</p>
+                             <p>Procurement processes are followed by TEQUAS. Technical support is provided for physical lab conditions. Upon completion, the lab becomes fully operational, ready for measurements and audits.</p>`,
+                s2_title: "Data Analytics",
+                s2_content: `<p>TEQUAS moves your production outputs away from intuitive interpretations into a mathematical and comparable monitoring structure. The goal is not just to see the result, but to understand it along with its root causes.</p>
+                             <p>Production, quality, and measurement data are evaluated alongside process parameters and field observations. This data is structured to provide direct input for decision-making through trends, deviations, and recurring patterns.</p>`,
+                s3_title: "Process Optimization",
+                s3_content: `<p>TEQUAS establishes audit and improvement mechanisms aligned with European standards to reduce waste and re-production. This approach focuses on sustainable process improvements rather than just issue detection.</p>
+                             <p>The model is carried out with regionally structured shared analyst support. On-site observations analyze the current status, while remote data evaluation ensures continuous performance tracking when physical presence is not required.</p>`,
+                how_title: "How We Work",
+                how_sup: "Quality is Not a Coincidence. <br> Result of Correct Measurement, Right System, and Disciplined Management.",
+                step1_title: "Current State Analysis",
+                step1_content: "On-site technical inspection to identify bottlenecks in production and quality processes.",
+                step2_title: "KPI Definition",
+                step2_content: "Numerical and measurable definition of waste rates and efficiency targets.",
+                step3_title: "System Design",
+                step3_content: "Projecting custom laboratory and data infrastructure with engineering discipline.",
+                step4_title: "Setup & Follow-up",
+                step4_content: "System activation and regular monitoring with analyst support.",
+                about_title: "About Us",
+                about_content: `
+                    <div class="space-y-8 text-slate-700 leading-relaxed text-lg text-justify">
+                        <p>TEQUAS operates with a system approach built on measurement, data, and engineering discipline, ensuring quality is not left to individual experience or habits.</p>
+                        <p>In modern production, quality is not just a result detected at final inspection, but a structure that must be designed and verified throughout the process. Therefore, TEQUAS handles quality not as a control activity, but as a holistic system of measurement infrastructure, process management, and technical verification mechanisms.</p>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 my-12">
+                            <div class="p-8 bg-slate-50 border-t-4 border-tequas-gold text-center">
+                                <i class="fas fa-microscope text-tequas-gold text-3xl mb-4"></i>
+                                <h4 class="font-black text-tequas-navy uppercase tracking-widest text-xs mb-2">Measurability</h4>
+                            </div>
+                            <div class="p-8 bg-slate-50 border-t-4 border-tequas-gold text-center">
+                                <i class="fas fa-project-diagram text-tequas-gold text-3xl mb-4"></i>
+                                <h4 class="font-black text-tequas-navy uppercase tracking-widest text-xs mb-2">Traceability</h4>
+                            </div>
+                            <div class="p-8 bg-slate-50 border-t-4 border-tequas-gold text-center">
+                                <i class="fas fa-leaf text-tequas-gold text-3xl mb-4"></i>
+                                <h4 class="font-black text-tequas-navy uppercase tracking-widest text-xs mb-2">Sustainability</h4>
+                            </div>
+                        </div>
+
+                        <p>Real quality is only possible when correct measurement systems are established, process parameters are under control, and decisions are made based on data. TEQUAS designs measurement reliability, process stability, and systematic quality infrastructure together.</p>
+                        <p>Each study is structured considering the technical dynamics, production characteristics, and audit requirements of the relevant sector. Processes are handled as a single system logic, not piece by piece. The goal is to create a self-operating, auditable, and future-ready quality structure.</p>
+
+                        <div class="bg-tequas-navy p-10 my-12 text-white shadow-xl">
+                            <h4 class="text-tequas-gold font-black uppercase tracking-[0.3em] text-[10px] mb-6">Established systems are;</h4>
+                            <ul class="grid md:grid-cols-2 gap-4 text-sm font-medium">
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Audit-ready</li>
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Compliant with customer requirements</li>
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Integrated with international standards</li>
+                                <li class="flex items-center gap-3"><i class="fas fa-check text-tequas-gold"></i> Operationally sustainable</li>
+                            </ul>
+                            <p class="mt-6 text-xs text-slate-400 italic">designed in such a way.</p>
+                        </div>
+
+                        <p>TEQUAS’s approach is based on turning quality into a corporate system output rather than a personal reflex. Sustainable quality is achieved through properly structured engineering infrastructure.</p>
+                        <p class="font-black text-tequas-navy text-xl pt-6 border-t border-slate-100">TEQUAS builds technical clarity, measurable performance, and systematic trust.</p>
+                    </div>
+                `,
+                why_title: "Why TEQUAS?",
+                why_quote: "“Because you cannot manage what you cannot measure.”",
+                chart_title: "Performance Analysis",
+                reason1_title: "Data-Driven Management",
+                reason1_content: "TEQUAS establishes a system that connects quality to measurement, data, and engineering discipline instead of intuition. Decisions are independent of individuals and based on numerical data.",
+                reason2_title: "Need-Based Approach",
+                reason2_content: "The solution starts with the need, not the device. Instead of sales-oriented approaches, we analyze the actual production needs on-site and design infrastructure that serves the purpose.",
+                reason3_title: "Return on Investment",
+                reason3_content: "Quality is a measurable investment, not a cost. Established systems make waste and resource losses visible, ensuring traceable returns on investment.",
+                reason4_title: "Holistic Responsibility",
+                reason4_content: "We provide a single point of contact structure. The entire process from analysis to installation and follow-up is managed by TEQUAS, relieving you of the coordination burden.",
+                reason5_title: "Performance Tracking & KPI Reporting",
+                reason5_content: "The established system doesn't just build infrastructure; it monitors with measurable performance indicators (KPIs). Regular reporting is provided over identified indicators like waste and quality deviations.",
+                reason6_title: "Future Readiness",
+                reason6_content: "Infrastructure built with TEQUAS is structured to comply with future requirements such as audits, sustainability, and carbon border regulations.",
+                faq_title: "Frequently Asked Questions",
+                faq1_q: "How long is the payback period for the lab system?",
+                faq1_a: "With the reduction in scrap rates and elimination of rework costs, our projects typically cover their investment costs within 6-12 months.",
+                faq2_q: "How does the Shared Analyst model work?",
+                faq2_a: "Our expert engineers perform on-site visits weekly or monthly; they monitor your data remotely for the rest of the time to provide reports.",
+                faq3_q: "Which production sectors do you provide specialized support for?",
+                faq3_a: "We specialize in sectors where precision tolerances are critical, such as plastic injection, metal processing, and automotive sub-industries.",
+                faq4_q: "How is data confidentiality ensured in the shared analyst model?",
+                faq4_a: "All raw materials and necessary technical information are provided to analysts through a special coding system, ensuring full protection of commercial secrets.",
+                faq5_q: "Is a major downtime required for data analytics studies?",
+                faq5_a: "No. Our data collection and analysis processes are designed not to disrupt production. Digitizing your outputs is done without stopping the flow.",
+                contact_title: "Contact",
+                contact_email_label: "EMAIL",
+                contact_phone_label: "PHONE",
+                footer_address: "ATAŞEHİR / ISTANBUL",
+                form_btn: "SEND REQUEST",
+                copyright: "&copy; 2026 TEQUAS ENGINEERING. ALL RIGHTS RESERVED.",
+                form_success: "REQUEST RECEIVED. WE WILL GET BACK TO YOU SOON.",
+                form_error: "AN ERROR OCCURRED. PLEASE TRY AGAIN LATER.",
+                form_config_error: "FORM CONFIGURATION IS NOT COMPLETE YET.",
+                lang_tr: "TURKISH",
+                lang_en: "ENGLISH"
+            }
+        };
+
+        const app = {
+            currentLang: 'tr',
+
+            init() {
+                this.setLanguage(this.currentLang);
+                this.initChart();
+                this.initForm();
+            },
+
+            setLanguage(lang) {
+                this.currentLang = lang;
+                document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+                const activeBtn = document.querySelector(`.${lang}-btn`);
+                if(activeBtn) activeBtn.classList.add('active');
+
+                document.querySelectorAll('[data-key]').forEach(el => {
+                    const key = el.getAttribute('data-key');
+                    if(translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+                document.documentElement.lang = lang;
+                if (window.myChart) this.initChart();
+            },
+
+            toggleMenu() {
+                document.getElementById('mobile-menu').classList.toggle('open');
+            },
+
+            nav(pageId) {
+                document.querySelectorAll('.site-page').forEach(p => p.classList.remove('active'));
+                const target = document.getElementById('page-' + pageId);
+                if(target) target.classList.add('active');
+
+                document.querySelectorAll('.nav-tab').forEach(l => {
+                    l.classList.remove('active', 'text-white');
+                    l.classList.add('text-slate-400');
+                });
+                
+                const activeBtn = document.getElementById('btn-' + pageId);
+                if(activeBtn) {
+                    activeBtn.classList.add('active', 'text-white');
+                    activeBtn.classList.remove('text-slate-400');
+                }
+
+                document.getElementById('mobile-menu').classList.remove('open');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                if(pageId === 'why') this.initChart();
+            },
+
+            initChart() {
+                const canvas = document.getElementById('performanceChart');
+                if (!canvas) return; 
+
+                const existingChart = Chart.getChart(canvas);
+                if (existingChart) existingChart.destroy();
+
+                const ctx = canvas.getContext('2d');
+                window.myChart = new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: this.currentLang === 'tr' ? 
+                            ['ROI', 'Veri Görünürlüğü', 'Sürdürülebilirlik', 'Hassasiyet', 'Maliyet Verimi'] :
+                            ['ROI', 'Data Visibility', 'Sustainability', 'Precision', 'Cost Efficiency'],
+                        datasets: [
+                            {
+                                label: 'TEQUAS',
+                                data: [95, 98, 90, 99, 92],
+                                backgroundColor: 'rgba(182, 141, 64, 0.2)',
+                                borderColor: '#B68D40',
+                                borderWidth: 2,
+                                pointBackgroundColor: '#B68D40'
+                            },
+                            {
+                                label: this.currentLang === 'tr' ? 'Geleneksel' : 'Traditional',
+                                data: [60, 45, 40, 65, 50],
+                                backgroundColor: 'rgba(15, 23, 42, 0.05)',
+                                borderColor: 'rgba(15, 23, 42, 0.3)',
+                                borderWidth: 1,
+                                pointBackgroundColor: 'rgba(15, 23, 42, 0.3)'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                angleLines: { color: 'rgba(15, 23, 42, 0.1)' },
+                                grid: { color: 'rgba(15, 23, 42, 0.1)' },
+                                pointLabels: { font: { size: 9, weight: 'bold' } },
+                                ticks: { display: false },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+
+            initForm() {
+                const form = document.getElementById('vercelContactForm');
+                if(!form) return;
+
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const status = document.getElementById('form-status');
+                    const btn = document.getElementById('submit-btn');
+                    
+                    if (formspreeID === "BURAYA_ID_GELECEK") {
+                        status.classList.remove('hidden', 'text-green-600');
+                        status.classList.add('text-red-500');
+                        status.innerHTML = translations[this.currentLang].form_config_error;
+                        return;
+                    }
+
+                    const formData = new FormData(form);
+                    btn.disabled = true;
+                    btn.innerHTML = this.currentLang === 'tr' ? "GÖNDERİLİYOR..." : "SENDING...";
+                    
+                    try {
+                        const response = await fetch(`https://formspree.io/f/${formspreeID}`, {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        
+                        if (response.ok) {
+                            status.classList.remove('hidden', 'text-red-500');
+                            status.classList.add('text-green-600');
+                            status.innerHTML = translations[this.currentLang].form_success;
+                            form.reset();
+                        } else {
+                            throw new Error();
+                        }
+                    } catch (error) {
+                        status.classList.remove('hidden', 'text-green-600');
+                        status.classList.add('text-red-500');
+                        status.innerHTML = translations[this.currentLang].form_error;
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = translations[this.currentLang].form_btn;
+                    }
+                });
+            }
+        };
+
+        window.onload = () => app.init();
+    </script>
+</body>
+</html>
